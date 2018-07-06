@@ -6,4 +6,22 @@
 
 <ion-content padding>
 
+  <ion-list>
+
+    <ion-item>
+      <ion-label fixed>Email</ion-label>
+      <ion-input type="email" value=""></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Password</ion-label>
+      <ion-input type="password"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <button ion-button primary (click)='attemptLogin()'>Log In</button>
+
+  <button ion-button color="secondary" outline (click)='navToRegister()'>Register</button> 
+
 </ion-content>
