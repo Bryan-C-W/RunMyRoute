@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { NewRoutePage } from '../new-route/new-route';
 
 @Component({
   selector: 'page-home',
@@ -7,8 +8,12 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  constructor(public nav: NavController) {
 
+  }
+
+  goToNewRoutePage(){
+    this.nav.push(NewRoutePage);
   }
 
 }
