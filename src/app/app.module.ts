@@ -10,6 +10,7 @@ import { NewRoutePage } from '../pages/new-route/new-route';
 import { LoginPage } from '../pages/login/login';
 import { RegisterPage } from '../pages/register/register';
 
+import { Geolocation } from '@ionic-native/geolocation';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -38,6 +39,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
