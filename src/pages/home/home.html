@@ -4,11 +4,15 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Home</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
   <!-- MAP GOES HERE -->
+  <div #map id="map"></div>
 
   <button ion-button secondary (click)="goToNewRoutePage()">Make a Route</button>
 </ion-content>
