@@ -13,26 +13,42 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  route:any = [
+  routes:any = [
     {
-      lat: 41.421616,
-      lng: -96.465819
+      title: 'Wilmont Loop',
+      color: '#b0b0b0',
+      coordinates: [
+        {
+          lat: 41.421616,
+          lng: -96.465819
+        },
+        {
+          lat: 41.421624,
+          lng: -96.464529
+        },
+        {
+          lat: 41.418848,
+          lng: -96.464615
+        },
+        {
+          lat: 41.418880,
+          lng: -96.465538
+        }
+      ]
     },
     {
-      lat: 41.421624,
-      lng: -96.464529
-    },
-    {
-      lat: 41.418848,
-      lng: -96.464615
-    },
-    {
-      lat: 41.418880,
-      lng: -96.465538
-    },
-    {
-      lat: 41.421616,
-      lng: -96.465819
+      title: 'Deerfield Sprint',
+      color: '#44FF11',
+      coordinates: [
+        {
+          lat: 41.421625,
+          lng: -96.463958
+        },
+        {
+          lat: 41.421676,
+          lng: -96.468559
+        }
+      ]
     }
   ]
 
@@ -68,21 +84,27 @@ export class HomePage {
       icon: "https://static.xx.fbcdn.net/images/emoji.php/v9/f5d/2/16/1f3c6.png"
     });
 
-    let routeLine = new google.maps.Polyline({
-      path: this.route,
-      geodesic: true,
-      strokeColor: '#FF0000',
-      strokeOpacity: 0.8,
-      strokeWeight: 3,
-    });
-    routeLine.setMap(this.map);
+    for(var i=0; i < this.routes.length; i++){
+      let route = this.routes[i];
 
-    // Open the InfoWindow on mouseover:
-    google.maps.event.addListener(routeLine, 'mouseover', (event) => {
-       this.infoWindow.setPosition(event.latLng);
-       this.infoWindow.setContent('Example text');
-       this.infoWindow.open(this.map);
-    });
+      let routeLine = new google.maps.Polygon({
+        path: route.coordinates,
+        geodesic: true,
+        strokeColor: route.color,
+        strokeOpacity: 0.8,
+        strokeWeight: 3,
+        fillColor: '#FF0000',
+        fillOpacity: 0,
+      });
+      routeLine.setMap(this.map);
+
+      // Open the InfoWindow on mouseover:
+      google.maps.event.addListener(routeLine, 'mouseover', (event) => {
+         this.infoWindow.setPosition(event.latLng);
+         this.infoWindow.setContent(`Title: ${route.title}`);
+         this.infoWindow.open(this.map);
+      });
+    }
 
   }
 
