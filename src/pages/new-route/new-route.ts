@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+import { Http } from '@angular/http';
+
 import { NavController, NavParams } from 'ionic-angular';
 
 import { Geolocation } from '@ionic-native/geolocation';
+import { HomePage } from '../home/home';
 
 @Component({
   selector: 'page-new-route',
@@ -9,7 +12,11 @@ import { Geolocation } from '@ionic-native/geolocation';
 })
 export class NewRoutePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private geolocation:Geolocation) {
+  newRouteCoordinates:any = [];
+  tracking:boolean = false;
+  routeName:string = '';
+
+  constructor(public nav: NavController, public navParams: NavParams, private geolocation:Geolocation, private http:Http) {
   }
 
   ionViewDidLoad() {
@@ -17,13 +24,41 @@ export class NewRoutePage {
   }
 
   startTracking(){
+    this.tracking = true;
+
     let watch = this.geolocation.watchPosition();
     watch.subscribe( (data) => {
-      console.log(data);
-      // data can be a set of coordinates, or an error (if an error occurred).
-      // data.coords.latitude
-      // data.coords.longitude
+      console.log("Watching for new data:", data);
+
+      let newCoordinate = {
+        lat: data.coords.latitude,
+        lng: data.coords.longitude
+      }
+
+      this.newRouteCoordinates.push(newCoordinate);
+
     });
+  }
+
+  stopTracking(){
+    this.tracking = false;
+
+    //TODO implement saving of data to external source
+    let url = "http://ptsv2.com/t/okb6k-1532481496/post";
+
+    let postData = {
+      name: this.routeName,
+      coordinates: this.newRouteCoordinates
+    }
+
+    console.log(url, postData);
+
+    this.http.post(url, JSON.stringify(postData)).subscribe( (result:any) => {
+      console.log(result);
+    });
+
+    this.nav.setRoot(HomePage);
+
   }
 
 }

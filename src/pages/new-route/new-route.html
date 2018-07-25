@@ -9,11 +9,12 @@
   <ion-list>
 
     <ion-item>
-      <ion-input type="text" placeholder="Route name"></ion-input>
+      <ion-input [(ngModel)]='routeName' type="text" placeholder="Route name"></ion-input>
     </ion-item>
 
   </ion-list>
 
-  <button (click)='startTracking()' ion-button block color="secondary">Start Tracking</button>
+  <button *ngIf='!tracking' (click)='startTracking()' ion-button block color="secondary">Start Tracking</button>
+  <button *ngIf='tracking' (click)='stopTracking()' ion-button block color="danger">Stop Tracking</button>
 
 </ion-content>
